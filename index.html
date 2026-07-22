@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Bon anniversaire Papa</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --den-green:#232946;
+    --bark:#2E3A63;
+    --oat:#FDF6E3;
+    --honey:#F2B705;
+    --rust:#E85D4C;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: var(--den-green);
+    font-family:'Nunito', sans-serif;
+    color: var(--oat);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+  }
+  .app{
+    width:100%;
+    max-width:430px;
+    min-height:100vh;
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 20% 0%, rgba(232,163,61,0.12), transparent 45%),
+      var(--den-green);
+  }
+  section{
+    padding:56px 24px;
+    min-height:100vh;
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+  }
+  section.active{display:flex;}
+
+  h1,h2,h3{font-family:'Baloo 2', sans-serif; margin:0; line-height:1.1;}
+  .eyebrow{
+    font-family:'Nunito'; font-weight:800; letter-spacing:0.14em;
+    text-transform:uppercase; font-size:12px; color: var(--honey); margin-bottom:10px;
+  }
+
+  /* HOME */
+  .paw{font-size:56px; margin-bottom:6px;}
+  #home h1{font-size:26px; margin-bottom:6px;}
+  #home p.sub{font-size:14px; opacity:0.7; margin-bottom:34px;}
+  .menu{width:100%; max-width:300px; display:flex; flex-direction:column; gap:16px;}
+
+  .menu-btn{
+    font-family:'Baloo 2'; font-weight:700; font-size:17px;
+    background:var(--honey); color:#2D2010;
+    border:none; padding:18px 20px; border-radius:16px;
+    box-shadow:0 6px 0 #a8722a;
+    cursor:pointer; text-align:left;
+    display:flex; align-items:center; gap:12px;
+    transition:transform .08s ease;
+  }
+  .menu-btn:active{transform:translateY(4px); box-shadow:0 2px 0 #a8722a;}
+  .menu-btn .icon{font-size:24px;}
+  .menu-btn .txt{display:flex; flex-direction:column;}
+  .menu-btn .txt small{font-weight:600; font-size:11px; opacity:0.65;}
+
+  .menu-btn.locked{
+    background:rgba(243,233,216,0.08);
+    color:rgba(243,233,216,0.4);
+    box-shadow:none;
+    border:2px solid rgba(243,233,216,0.15);
+    cursor:default;
+    pointer-events:none;
+  }
+  .menu-btn.locked .icon{opacity:0.5;}
+
+  .check{
+    font-size:11px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase;
+    display:flex; gap:6px; margin-top:26px; opacity:0.6;
+  }
+  .check span{display:flex; align-items:center; gap:5px;}
+  .check .on{color:var(--honey); opacity:1;}
+
+  /* generic buttons */
+  .btn{
+    font-family:'Baloo 2'; font-weight:700; font-size:16px;
+    background:var(--honey); color:#2D2010; border:none;
+    padding:14px 28px; border-radius:14px; margin-top:26px;
+    box-shadow:0 6px 0 #a8722a; cursor:pointer;
+  }
+  .btn:active{transform:translateY(4px); box-shadow:0 2px 0 #a8722a;}
+  .backbtn{
+    position:absolute; top:20px; left:20px;
+    background:none; border:none; color:var(--oat); opacity:0.6;
+    font-family:'Nunito'; font-weight:800; font-size:13px; cursor:pointer;
+    padding:8px;
+  }
+
+  .dna-box{
+    width:100%; max-width:320px; margin-top:22px;
+    background:#12172a; border:1px solid rgba(242,183,5,0.3); border-radius:12px;
+    padding:16px 14px; text-align:left;
+    font-family:'Courier New', monospace; font-size:11.5px; line-height:1.55;
+    color:var(--honey); white-space:pre-wrap;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+  }
+  .dna-box .done{color:#8fd694;}
+
+  /* SCANNER (legacy ring, unused but kept safe) */
+  .scanner-ring{
+    width:150px; height:150px; border-radius:50%;
+    border:4px solid rgba(243,233,216,0.15);
+    display:flex; align-items:center; justify-content:center;
+    font-size:52px; position:relative; margin-bottom:10px;
+  }
+  .scanner-ring.scanning{border-color: var(--honey); animation: pulse 0.6s ease-in-out infinite alternate;}
+  @keyframes pulse{ from{ box-shadow:0 0 0 0 rgba(232,163,61,0.4);} to{ box-shadow:0 0 0 14px rgba(232,163,61,0);} }
+  .result-card{
+    margin-top:22px; background:var(--bark); border-radius:16px; padding:20px 22px;
+    max-width:290px; opacity:0; transform:translateY(8px); transition:all .4s ease;
+  }
+  .result-card.show{opacity:1; transform:translateY(0);}
+  .result-card .lvl{font-family:'Baloo 2'; font-weight:800; font-size:18px; color:var(--honey); margin-bottom:6px;}
+  .result-card .desc{font-size:14px; font-weight:600;}
+  .scan-count{font-size:12px; opacity:0.45; margin-top:14px; font-weight:700;}
+
+  /* TITRES */
+  .diploma{
+    width:100%; max-width:300px; background:var(--oat); color:var(--bark);
+    border-radius:18px; padding:26px 20px; box-shadow:0 16px 34px rgba(0,0,0,0.35);
+    border:3px solid var(--honey); position:relative;
+  }
+  .diploma .seal{
+    position:absolute; top:-18px; right:-10px; width:52px; height:52px; border-radius:50%;
+    background:var(--rust); display:flex; align-items:center; justify-content:center;
+    font-size:22px; transform:rotate(12deg); box-shadow:0 5px 12px rgba(0,0,0,0.3);
+  }
+  .diploma .label{font-size:11px; letter-spacing:0.12em; text-transform:uppercase; font-weight:800; color:var(--rust);}
+  .diploma h2{font-size:21px; margin:10px 0; min-height:52px; display:flex; align-items:center; justify-content:center;}
+  .diploma .fine{font-size:12px; opacity:0.7;}
+
+  /* FINALE */
+  .confetti{position:fixed; top:-10px; z-index:2; font-size:20px; animation: fall linear forwards; pointer-events:none;}
+  @keyframes fall{to{ transform:translateY(110vh) rotate(360deg); opacity:0.9;}}
+  #finale h1{font-size:30px; margin-bottom:10px;}
+  #finale p{font-size:15px; opacity:0.8; max-width:280px;}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- HOME -->
+  <section class="active" id="home">
+    <div class="menu" style="margin-top:20px;">
+      <button class="menu-btn" onclick="show('scanner')">
+        <span class="icon">🧬</span>
+        <span class="txt">Test ADN</span>
+      </button>
+      <button class="menu-btn" onclick="show('titres')">
+        <span class="icon">🏆</span>
+        <span class="txt">Tirer un titre</span>
+      </button>
+      <button class="menu-btn locked" id="finalBtn" onclick="show('finale')">
+        <span class="icon">🎉</span>
+        <span class="txt">Joyeux anniversaire</span>
+      </button>
+    </div>
+    <div class="check">
+      <span id="chk1">○ Test ADN fait</span>
+      <span id="chk2">○ Titre obtenu</span>
+    </div>
+  </section>
+
+  <!-- TEST ADN -->
+  <section id="scanner">
+    <button class="backbtn" onclick="show('home')">← Menu</button>
+    <div class="eyebrow">Laboratoire familial</div>
+    <h2 style="font-size:20px; margin-bottom:20px;">Test ADN</h2>
+
+    <button class="btn" id="startDnaBtn" onclick="startDna()" style="margin-top:0;">Lancer le test ADN</button>
+
+    <div class="dna-box" id="dnaLoading" style="display:none;"></div>
+
+    <div class="dna-box" id="dnaResult1" style="display:none;">═══════════════════════════════
+        ANALYSE GÉNÉTIQUE
+═══════════════════════════════
+
+Espèce :
+Homo Papatus
+
+Âge biologique :
+56 ans
+
+Authenticité :
+100 % Papa
+
+───────────────────────────────
+Composition génétique
+
+ADN de canapé.................. 42 %
+Gène du film pas fini.......... 21 %
+Caféine......................... 15 %
+Gène râleur...................... 12 %
+Papa.............................. 10 %</div>
+    <button class="btn" id="toResult2Btn" style="display:none;" onclick="showResult2()">Suite →</button>
+
+    <div class="dna-box" id="dnaResult2" style="display:none;">═══════════════════════════════
+    ANALYSE COMPORTEMENTALE
+═══════════════════════════════
+
+Résultats
+
+Sorties volontaires :
+▰▱▱▱▱▱▱▱▱▱ 8 %
+
+Retour automatique au canapé :
+▰▰▰▰▰▰▰▰▰▰ 100 %
+
+Probabilité de s'endormir
+devant un film :
+97,8 %
+
+Capacité à râler
+pour une petite chose :
+99,4 %
+
+Probabilité d'aller aux toilettes
+dans les 2 minutes après le réveil :
+100 %
+
+Besoin d'un café ensuite :
+95,2 %</div>
+  </section>
+
+  <!-- TITRES -->
+  <section id="titres">
+    <button class="backbtn" onclick="show('home')">← Menu</button>
+    <div class="eyebrow">Distributeur officiel</div>
+    <h2 style="font-size:20px; margin-bottom:22px;">Titre honorifique</h2>
+    <div class="diploma">
+      <div class="seal">🏅</div>
+      <div class="label">Certificat</div>
+      <h2 id="titleText">???</h2>
+      <div class="fine">Remis après une analyse rigoureuse menée depuis le canapé.</div>
+    </div>
+    <button class="btn" onclick="drawTitle()">Tirer un titre</button>
+  </section>
+
+  <!-- FINALE -->
+  <section id="finale">
+    <button class="backbtn" onclick="show('home')">← Menu</button>
+    <div class="eyebrow"></div>
+    <h1>Joyeux anniversaire !!!!!!</h1>
+    <button class="btn" onclick="confettiBurst()">Encore des confettis</button>
+  </section>
+
+</div>
+
+<script>
+let hasScanned = false;
+let hasTitle = false;
+let scanCount = 0;
+
+function show(id){
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  if(id === 'finale'){ confettiBurst(); }
+}
+
+const dnaLoadingLines = [
+  "Échantillon : Validé",
+  "Comparaison : 8 427 513 profils...",
+  "Extraction de l'ADN...",
+  "Vérification de l'âge...",
+  "Recherche du gène du canapé...",
+  "Analyse des habitudes...",
+  "Comparaison avec les papas français...",
+  "Génération du rapport..."
+];
+
+function startDna(){
+  document.getElementById('startDnaBtn').style.display = 'none';
+  const box = document.getElementById('dnaLoading');
+  box.style.display = 'block';
+  box.textContent = "═══════════════════════════════\n      RAPPORT D'ANALYSE ADN\n═══════════════════════════════\n\n";
+  let i = 0;
+  const header = box.textContent;
+  function nextLine(){
+    if(i < dnaLoadingLines.length){
+      box.textContent += dnaLoadingLines[i] + "\n";
+      i++;
+      setTimeout(nextLine, 420);
+    } else {
+      setTimeout(()=>{
+        box.style.display = 'none';
+        document.getElementById('dnaResult1').style.display = 'block';
+        document.getElementById('toResult2Btn').style.display = 'inline-block';
+        hasScanned = true;
+        updateLock();
+      }, 500);
+    }
+  }
+  nextLine();
+}
+
+function showResult2(){
+  document.getElementById('dnaResult2').style.display = 'block';
+  document.getElementById('toResult2Btn').style.display = 'none';
+}
+
+const titles = [
+  "Roi incontesté du canapé",
+  "Champion du sommeil devant les films",
+  "Grand Maître du café matinal",
+  "Expert en esquive de sorties",
+  "Gardien Suprême de la télécommande",
+  "Ambassadeur du \"On est bien à la maison\""
+];
+
+function drawTitle(){
+  const t = titles[Math.floor(Math.random()*titles.length)];
+  document.getElementById('titleText').textContent = t;
+  hasTitle = true;
+  updateLock();
+}
+
+function updateLock(){
+  document.getElementById('chk1').textContent = (hasScanned ? '✓ Scan fait' : '○ Scan fait');
+  document.getElementById('chk1').classList.toggle('on', hasScanned);
+  document.getElementById('chk2').textContent = (hasTitle ? '✓ Titre obtenu' : '○ Titre obtenu');
+  document.getElementById('chk2').classList.toggle('on', hasTitle);
+
+  const btn = document.getElementById('finalBtn');
+  if(hasScanned && hasTitle){
+    btn.classList.remove('locked');
+  }
+}
+
+function confettiBurst(){
+  const emojis = ['🎉','🎂','✨','⭐','🎈'];
+  for(let i=0;i<70;i++){
+    const c = document.createElement('div');
+    c.className='confetti';
+    c.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    c.style.left = Math.random()*100+'%';
+    c.style.animationDuration = (2.5+Math.random()*1.5)+'s';
+    c.style.animationDelay = (Math.random()*0.6)+'s';
+    document.getElementById('app').appendChild(c);
+    setTimeout(()=>c.remove(), 5000);
+  }
+}
+</script>
+</body>
+</html>
