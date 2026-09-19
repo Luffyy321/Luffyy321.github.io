@@ -1,0 +1,438 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Palette papier / encre / rouge manga : fond clair, encre noire, accent rouge vif. */
+  --brand: #111111;
+  --muted: #6b5c5c;
+  --card-radius: 18px;
+  --accent: #d72626;
+  --bg-dark: #f7f1e7;
+  --bg-gradient: linear-gradient(180deg, #fbf7f1 0%, #f3efe8 100%);
+  --paper: #fffdf9;
+  --ink: #111111;
+  --ink-soft: #2f2a2a;
+  --panel: rgba(255, 255, 255, 0.78);
+}
+
+/*
+  Typographie :
+  - Bangers pour les titres, les separators et le mot-symbole d'ouverture, pour garder l'impact visuel d'une couverture de manga.
+  - Source Sans 3 pour le texte courant afin de conserver une lecture confortable sur mobile et desktop.
+*/
+html,
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Source Sans 3', sans-serif;
+  color: var(--ink);
+  background: var(--bg-gradient) fixed;
+  scroll-behavior: smooth;
+}
+
+body {
+  position: relative;
+}
+
+/* Texture légère en trame de points, inspirée des pages de mange / halftone, sans écraser le texte. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, rgba(17, 17, 17, 0.12) 0.8px, transparent 0.9px);
+  background-size: 12px 12px;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.03), rgba(255, 255, 255, 0.12));
+  pointer-events: none;
+  z-index: 0;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+section.py-5 {
+  padding: 4rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 0 auto;
+  opacity: 0;
+  transform: translateY(18px);
+  pointer-events: none;
+  transition: opacity 420ms ease, transform 420ms ease;
+}
+
+body.loaded section.py-5,
+body.loaded footer {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+}
+
+.cards-grid {
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Intro manga : écran plein cadre, fond blanc cassé, texture halftone et lignes de vitesse pour reproduire l'effet de page de garde. */
+.hero-manga {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 2000;
+  background: var(--paper);
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 720ms ease, transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-manga::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(17, 17, 17, 0.2) 0.7px, transparent 0.8px);
+  background-size: 12px 12px;
+  opacity: 0.7;
+}
+
+.hero-manga::after {
+  content: '';
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 130%;
+  background: repeating-linear-gradient(
+    118deg,
+    transparent 0,
+    transparent 16px,
+    rgba(17, 17, 17, 0.07) 16px,
+    rgba(17, 17, 17, 0.07) 18px,
+    transparent 18px,
+    transparent 36px
+  );
+  transform: rotate(-5deg) translateX(-4%);
+  opacity: 0.8;
+}
+
+.manga-panel {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.manga-kicker {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-family: 'Bangers', 'Impact', sans-serif;
+  letter-spacing: 0.2em;
+  font-size: clamp(0.9rem, 2vw, 1.3rem);
+  color: var(--accent);
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(-20px) rotate(-4deg);
+}
+
+.hero-manga h1 {
+  margin: 0;
+  font-family: 'Bangers', 'Impact', sans-serif;
+  font-size: clamp(4.8rem, 16vw, 14rem);
+  line-height: 0.82;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  text-shadow: 6px 6px 0 var(--accent);
+  transform-origin: center;
+  opacity: 0;
+  transform: translateY(40px) scale(0.82) rotate(-2deg);
+}
+
+.manga-bar {
+  width: min(70vw, 450px);
+  height: 6px;
+  margin: 1.2rem auto 0;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--ink) 45%, var(--accent) 100%);
+  border-radius: 999px;
+  box-shadow: 0 0 20px rgba(215, 38, 38, 0.3);
+  opacity: 0;
+  transform: translateX(-30px) scaleX(0.6);
+}
+
+.manga-panel.is-ready .manga-kicker {
+  animation: introKicker 700ms ease-out 180ms forwards;
+}
+
+.manga-panel.is-ready h1 {
+  animation: introTitle 950ms ease-out 260ms forwards;
+}
+
+.manga-panel.is-ready .manga-bar {
+  animation: introBar 700ms ease-out 500ms forwards;
+}
+
+@keyframes introKicker {
+  0% {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes introTitle {
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes introBar {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.5);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+body.loaded .hero-manga {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8%) scale(1.02);
+}
+
+/* Cartes : bordures irrégulières, aspect "encre" et flash blanc au survol. */
+.card {
+  position: relative;
+  z-index: 2;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 4px solid var(--ink);
+  background: linear-gradient(180deg, #fffefb 0%, #f7f1ea 100%);
+  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.85), 10px 10px 0 rgba(17, 17, 17, 0.9);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.9;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+.card-img-top {
+  position: relative;
+  z-index: 1;
+  height: 80%;
+  object-fit: contain;
+  width: 82%;
+  display: block;
+  margin: 0 auto;
+  padding: 1rem 0 0;
+  background: transparent;
+  filter: none;
+}
+
+.card-body {
+  position: relative;
+  z-index: 1;
+  padding: 1rem 1rem 1.1rem;
+  margin-top: auto;
+  background: rgba(255, 255, 255, 0.93);
+  border-top: 3px solid var(--ink);
+}
+
+.card-body::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), rgba(17, 17, 17, 0.9));
+  transition: width 220ms ease;
+}
+
+.card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--card-radius);
+}
+
+.card-link:focus {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.card-link:hover .card,
+.card-link:focus .card {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 22px rgba(17, 17, 17, 0.18), 0 0 0 2px rgba(215, 38, 38, 0.8);
+  border-color: var(--accent);
+}
+
+.card-link:hover .card::before,
+.card-link:focus .card::before {
+  opacity: 0.55;
+  animation: speedFlash 240ms ease-in-out;
+}
+
+.card-link:hover .card-body::before,
+.card-link:focus .card-body::before {
+  width: 100%;
+}
+@keyframes speedFlash {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0.1;
+  }
+
+  35% {
+    transform: translateX(0);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translateX(100%);
+    opacity: 0.1;
+  }
+}
+
+.card h3 {
+  position: relative;
+  z-index: 1;
+  color: var(--ink);
+  font-family: 'Bangers', 'Impact', sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+}
+
+/* Titres de séparation et éléments de détail style manga. */
+.terminal-separator,
+.skill-title,
+.projet_title,
+.footer-colophon {
+  font-family: 'Bangers', 'Impact', sans-serif;
+  letter-spacing: 0.08em;
+}
+
+/* Footer : conserve le copyright et ajoute un colophon de fin de chapitre au style manga. */
+footer {
+  position: relative;
+  z-index: 2;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.72);
+  border-top: 3px solid var(--ink);
+}
+
+footer .container {
+  font-family: 'Source Sans 3', sans-serif;
+  flex-wrap: wrap;
+}
+
+.footer-links {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.footer-links a:hover {
+  color: var(--accent) !important;
+}
+
+.footer-colophon-wrap {
+  padding-top: 0;
+}
+
+.footer-colophon {
+  display: inline-block;
+  color: var(--accent);
+  font-size: 1.2rem;
+  letter-spacing: 0.2em;
+  text-transform: lowercase;
+  border-top: 2px solid rgba(17, 17, 17, 0.32);
+  padding-top: 0.5rem;
+}
+
+/* Responsive mobile-first : les éléments restent lisibles et l'intro couvre bien l'écran. */
+@media (max-width: 576px) {
+  .hero-manga h1 {
+    text-shadow: 4px 4px 0 var(--accent);
+  }
+
+  .card {
+    min-height: 360px;
+  }
+
+  .card-img-top {
+    height: 80%;
+  }
+
+  footer .container {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .footer-links {
+    width: 100%;
+    justify-content: center;
+  }
+}
