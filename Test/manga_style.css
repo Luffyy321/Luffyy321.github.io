@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Bebas+Neue&family=Source+Sans+3:wght@400;500;600;700&display=swap');
 
 :root {
   /* Palette papier / encre / rouge manga : fond clair, encre noire, accent rouge vif. */
@@ -6,12 +6,36 @@
   --muted: #6b5c5c;
   --card-radius: 18px;
   --accent: #d72626;
+  --accent-rgb: 215, 38, 38;
   --bg-dark: #f7f1e7;
   --bg-gradient: linear-gradient(180deg, #fbf7f1 0%, #f3efe8 100%);
   --paper: #fffdf9;
   --ink: #111111;
+  --ink-rgb: 17, 17, 17;
   --ink-soft: #2f2a2a;
   --panel: rgba(255, 255, 255, 0.78);
+  /* Couleur des points de trame qui s'inverse entre thème clair et sombre. */
+  --dot: rgba(17, 17, 17, 0.12);
+  /* Couleur des lignes de vitesse de l'intro qui s'inverse entre thème clair et sombre. */
+  --speedline: rgba(17, 17, 17, 0.07);
+}
+
+body.theme-dark {
+  --brand: #f5f5f5;
+  --muted: #d8d0d0;
+  --accent: #9b6bff;
+  --accent-rgb: 155, 107, 255;
+  --bg-dark: #0d1117;
+  --bg-gradient: linear-gradient(180deg, #11151b 0%, #191d24 100%);
+  --paper: #12161d;
+  --ink: #f4f4f4;
+  --ink-rgb: 244, 244, 244;
+  --ink-soft: #dfe3ea;
+  --panel: rgba(17, 22, 29, 0.8);
+  /* Couleur des points de trame pour le thème sombre, plus lumineuse pour contraster sur fond noir. */
+  --dot: rgba(244, 244, 244, 0.14);
+  /* Couleur des lignes de vitesse de l'intro pour le thème sombre. */
+  --speedline: rgba(244, 244, 244, 0.08);
 }
 
 /*
@@ -32,6 +56,164 @@ body {
 
 body {
   position: relative;
+  background: var(--bg-gradient) fixed;
+  color: var(--ink);
+}
+
+body.theme-dark .top-bar {
+  background: rgba(18, 22, 29, 0.85);
+  border-bottom-color: var(--ink);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+}
+
+body.theme-dark .theme-toggle {
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 3px 3px 0 rgba(255, 255, 255, 0.12);
+}
+
+body.theme-dark .theme-toggle__icon {
+  background: rgba(155, 107, 255, 0.18);
+}
+
+body.theme-dark .theme-toggle:hover,
+body.theme-dark .theme-toggle:focus-visible {
+  box-shadow: 6px 6px 0 rgba(244, 244, 244, 0.18);
+  background: #1c2029;
+}
+
+body.theme-dark .hero-manga {
+  background: var(--paper);
+}
+
+body.theme-dark .card {
+  background: linear-gradient(180deg, #171d26 0%, #0f1319 100%);
+  border-color: var(--ink);
+  box-shadow: 0 0 0 2px rgba(244, 244, 244, 0.3), 10px 10px 0 rgba(155, 107, 255, 0.35);
+}
+
+body.theme-dark .card-body {
+  background: rgba(17, 22, 29, 0.94);
+  border-top-color: var(--ink);
+}
+
+body.theme-dark footer {
+  background: rgba(17, 22, 29, 0.82);
+  color: var(--ink-soft);
+  border-top-color: var(--ink);
+}
+
+body.theme-dark .footer-links a {
+  color: var(--ink);
+}
+
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 2100;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 3px solid var(--ink);
+  box-shadow: 0 8px 18px rgba(17, 17, 17, 0.08);
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-100%);
+  transition: opacity 300ms ease, transform 300ms ease, visibility 300ms ease;
+}
+
+body.loaded .top-bar {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.top-bar__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 58px;
+  padding-left: 0.35rem;
+  padding-right: 0.35rem;
+}
+
+.top-bar__brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.top-bar__logo {
+  height: 70px;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(215, 38, 38, 0.18));
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 34px;
+  padding: 0;
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 3px 3px 0 rgba(17, 17, 17, 0.9);
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  margin-right: 0.15rem;
+  overflow: hidden;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 6px 6px 0 rgba(17, 17, 17, 0.9);
+  background: #fff6f6;
+  outline: none;
+}
+
+.theme-toggle__track {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.theme-toggle__icon {
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(155, 107, 255, 0.18);
+  color: var(--ink);
+  font-size: 0.8rem;
+  box-shadow: inset 0 0 0 2px rgba(155, 107, 255, 0.2);
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), background 280ms ease, box-shadow 280ms ease;
+}
+
+.theme-toggle__icon i {
+  display: inline-block;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+body.theme-dark .theme-toggle__icon {
+  transform: translate(28px, -50%);
+  background: rgba(226, 53, 53, 0.733);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2), 0 0 12px rgba(255, 137, 107, 0.4);
 }
 
 /* Texture légère en trame de points, inspirée des pages de mange / halftone, sans écraser le texte. */
@@ -41,7 +223,7 @@ body::before {
   inset: 0;
   width: 100%;
   height: 100%;
-  background-image: radial-gradient(circle, rgba(17, 17, 17, 0.12) 0.8px, transparent 0.9px);
+  background-image: radial-gradient(circle, var(--dot) 0.8px, transparent 0.9px);
   background-size: 12px 12px;
   opacity: 0.35;
   pointer-events: none;
@@ -117,7 +299,7 @@ body.loaded footer {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle, rgba(17, 17, 17, 0.2) 0.7px, transparent 0.8px);
+  background-image: radial-gradient(circle, var(--dot) 0.7px, transparent 0.8px);
   background-size: 12px 12px;
   opacity: 0.7;
 }
@@ -131,8 +313,8 @@ body.loaded footer {
     118deg,
     transparent 0,
     transparent 16px,
-    rgba(17, 17, 17, 0.07) 16px,
-    rgba(17, 17, 17, 0.07) 18px,
+    var(--speedline) 16px,
+    var(--speedline) 18px,
     transparent 18px,
     transparent 36px
   );
@@ -161,7 +343,7 @@ body.loaded footer {
 
 .hero-manga h1 {
   margin: 0;
-  font-family: 'Bangers', 'Impact', sans-serif;
+  font-family: 'Bebas Neue', 'Impact', sans-serif;
   font-size: clamp(4.8rem, 16vw, 14rem);
   line-height: 0.82;
   letter-spacing: 0.08em;
@@ -170,6 +352,18 @@ body.loaded footer {
   transform-origin: center;
   opacity: 0;
   transform: translateY(40px) scale(0.82) rotate(-2deg);
+}
+
+main h1 {
+  margin: 0 0 1rem;
+  font-family: 'Bebas Neue', 'Impact', sans-serif;
+  font-size: clamp(2.8rem, 7vw, 5.2rem);
+  line-height: 0.6;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  text-shadow: 4px 4px 0 var(--accent);
+  opacity: 1;
+  transform: none;
 }
 
 .manga-bar {
@@ -237,6 +431,12 @@ body.loaded .hero-manga {
   transform: translateY(-8%) scale(1.02);
 }
 
+body.loaded .top-bar {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
 /* Cartes : bordures irrégulières, aspect "encre" et flash blanc au survol. */
 .card {
   position: relative;
@@ -298,7 +498,7 @@ body.loaded .hero-manga {
   bottom: 0;
   width: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--accent), rgba(17, 17, 17, 0.9));
+  background: linear-gradient(90deg, var(--accent), var(--ink));
   transition: width 220ms ease;
 }
 
@@ -317,7 +517,7 @@ body.loaded .hero-manga {
 .card-link:hover .card,
 .card-link:focus .card {
   transform: translateY(-3px);
-  box-shadow: 0 12px 22px rgba(17, 17, 17, 0.18), 0 0 0 2px rgba(215, 38, 38, 0.8);
+  box-shadow: 0 12px 22px rgba(17, 17, 17, 0.18), 0 0 0 2px rgba(var(--accent-rgb), 0.8);
   border-color: var(--accent);
 }
 
@@ -356,6 +556,124 @@ body.loaded .hero-manga {
   letter-spacing: 0.06em;
   text-transform: none;
   font-size: clamp(2rem, 4vw, 2.6rem);
+}
+
+/* Retour en arrière et blocs de contenu projet : bordures épaisses et ombre typographique BD. */
+.back-arrow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin: 1rem 0 1.5rem;
+  padding: 0;
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  text-decoration: none;
+  box-shadow: 4px 4px 0 rgba(17, 17, 17, 0.9);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.back-arrow:hover,
+.back-arrow:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(17, 17, 17, 0.9);
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.9);
+  outline: none;
+}
+
+.back-arrow__icon {
+  display: block;
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.projet_box {
+  position: relative;
+  z-index: 2;
+  background: var(--paper);
+  border: 4px solid var(--ink);
+  border-radius: 22px;
+  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.85), 10px 10px 0 rgba(17, 17, 17, 0.9);
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+body.theme-dark .projet_box {
+  background: rgba(18, 22, 29, 0.92);
+  border-color: var(--ink);
+  box-shadow: 0 0 0 2px rgba(244, 244, 244, 0.3), 10px 10px 0 rgba(155, 107, 255, 0.35);
+}
+
+.btn-contact {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.1rem;
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 4px 4px 0 rgba(17, 17, 17, 0.9);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.btn-contact:hover,
+.btn-contact:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(17, 17, 17, 0.9);
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--ink);
+  outline: none;
+}
+
+body.theme-dark .btn-contact {
+  background: rgba(18, 22, 29, 0.96);
+  box-shadow: 4px 4px 0 rgba(244, 244, 244, 0.12);
+}
+
+body.theme-dark .btn-contact:hover,
+body.theme-dark .btn-contact:focus-visible {
+  box-shadow: 6px 6px 0 rgba(244, 244, 244, 0.18);
+  background: #1c2029;
+}
+
+.terminal-separator {
+  display: inline-block;
+  padding: 0.45rem 1.1rem;
+  margin: 1.5rem 0 1rem;
+  background: rgba(var(--accent-rgb), 0.14);
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  color: var(--ink);
+  font-family: 'Bangers', 'Impact', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  box-shadow: 4px 4px 0 rgba(17, 17, 17, 0.8);
+}
+
+body.theme-dark .terminal-separator {
+  background: rgba(var(--accent-rgb), 0.22);
+  box-shadow: 4px 4px 0 rgba(244, 244, 244, 0.1);
+}
+
+.ratio.projet_box {
+  border: 4px solid var(--ink);
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--paper);
+  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.85), 10px 10px 0 rgba(17, 17, 17, 0.9);
+}
+
+body.theme-dark .ratio.projet_box {
+  background: rgba(18, 22, 29, 0.92);
+  box-shadow: 0 0 0 2px rgba(244, 244, 244, 0.3), 10px 10px 0 rgba(155, 107, 255, 0.35);
 }
 
 /* Titres de séparation et éléments de détail style manga. */
@@ -407,7 +725,7 @@ footer .container {
   font-size: 1.2rem;
   letter-spacing: 0.2em;
   text-transform: lowercase;
-  border-top: 2px solid rgba(17, 17, 17, 0.32);
+  border-top: 2px solid rgba(var(--ink-rgb), 0.32);
   padding-top: 0.5rem;
 }
 
