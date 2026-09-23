@@ -357,7 +357,7 @@ body.loaded footer {
 main h1 {
   margin: 0 0 1rem;
   font-family: 'Bebas Neue', 'Impact', sans-serif;
-  font-size: clamp(2.8rem, 7vw, 5.2rem);
+  font-size: clamp(3.4rem, 8vw, 5.2rem);
   line-height: 0.6;
   letter-spacing: 0.02em;
   color: var(--ink);
@@ -608,6 +608,105 @@ body.theme-dark .projet_box {
   box-shadow: 0 0 0 2px rgba(244, 244, 244, 0.3), 10px 10px 0 rgba(155, 107, 255, 0.35);
 }
 
+/*  Fiche personnage : portrait et illustrations encadrées comme des planches de manga. */
+.portrait-frame {
+  position: relative;
+  display: block;
+  padding: 0.75rem;
+  background: var(--paper);
+  border: 4px solid var(--ink);
+  border-radius: 22px;
+  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.85), 10px 10px 0 rgba(17, 17, 17, 0.9);
+  overflow: hidden;
+}
+
+.portrait-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+  background: rgba(17, 17, 17, 0.04);
+}
+
+body.theme-dark .portrait-frame {
+  background: rgba(18, 22, 29, 0.92);
+  box-shadow: 0 0 0 2px rgba(244, 244, 244, 0.3), 10px 10px 0 rgba(155, 107, 255, 0.35);
+}
+
+.about-manga .projet_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.skills-illustration {
+  width: min(220px, 100%);
+  aspect-ratio: 1.1;
+  margin-left: auto;
+}
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+/*  Étiquettes de personnage / tags de compétences, cohérentes avec le thème manga. */
+.skill-title {
+  margin: 0 0 1rem;
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  color: var(--ink);
+  text-transform: none;
+}
+
+.skill-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.85rem;
+  border: 3px solid var(--ink);
+  border-radius: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 4px 4px 0 rgba(17, 17, 17, 0.8);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.skill-badge:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(17, 17, 17, 0.8);
+  border-color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.06);
+}
+
+body.theme-dark .skill-badge {
+  background: rgba(18, 22, 29, 0.92);
+  color: var(--ink);
+  box-shadow: 4px 4px 0 rgba(244, 244, 244, 0.12);
+}
+
+body.theme-dark .skill-badge:hover {
+  box-shadow: 6px 6px 0 rgba(244, 244, 244, 0.18);
+  background: rgba(var(--accent-rgb), 0.12);
+}
+
+/*  Les cartes de compétences peuvent se placer côte à côte sans casser le comportement de .projet_box. */
+.skills-manga .projet_box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+@media (max-width: 767.98px) {
+  .skills-illustration {
+    margin-left: 0;
+    width: min(260px, 100%);
+  }
+}
+
 .btn-contact {
   display: inline-flex;
   align-items: center;
@@ -733,6 +832,12 @@ footer .container {
 @media (max-width: 576px) {
   .hero-manga h1 {
     text-shadow: 4px 4px 0 var(--accent);
+  }
+
+  main h1 {
+    font-size: clamp(3.8rem, 13vw, 5rem);
+    line-height: 0.72;
+    text-shadow: 3px 3px 0 var(--accent);
   }
 
   .card {
