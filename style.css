@@ -838,6 +838,21 @@ body.theme-dark .contact-terminal {
   -webkit-text-fill-color: var(--ink);
 }
 
+.contact-input:-webkit-autofill,
+.contact-input:-webkit-autofill:hover,
+.contact-input:-webkit-autofill:focus,
+.contact-input:-webkit-autofill:active,
+textarea.contact-input:-webkit-autofill,
+textarea.contact-input:-webkit-autofill:hover,
+textarea.contact-input:-webkit-autofill:focus,
+textarea.contact-input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--ink) !important;
+  color: var(--ink) !important;
+  background-color: var(--paper) !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--paper) inset !important;
+  box-shadow: 0 0 0 1000px var(--paper) inset !important;
+}
+
 .contact-input::placeholder {
   color: rgba(var(--ink-rgb), 0.56);
 }
@@ -854,6 +869,21 @@ body.theme-dark .contact-input {
   color: var(--ink);
   -webkit-text-fill-color: var(--ink);
   box-shadow: inset 0 0 0 2px rgba(244, 244, 244, 0.12);
+}
+
+body.theme-dark .contact-input:-webkit-autofill,
+body.theme-dark .contact-input:-webkit-autofill:hover,
+body.theme-dark .contact-input:-webkit-autofill:focus,
+body.theme-dark .contact-input:-webkit-autofill:active,
+body.theme-dark textarea.contact-input:-webkit-autofill,
+body.theme-dark textarea.contact-input:-webkit-autofill:hover,
+body.theme-dark textarea.contact-input:-webkit-autofill:focus,
+body.theme-dark textarea.contact-input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--ink) !important;
+  color: var(--ink) !important;
+  background-color: rgba(18, 22, 29, 0.92) !important;
+  -webkit-box-shadow: 0 0 0 1000px rgba(18, 22, 29, 0.92) inset !important;
+  box-shadow: 0 0 0 1000px rgba(18, 22, 29, 0.92) inset !important;
 }
 
 body.theme-dark .contact-input:focus {

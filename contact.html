@@ -49,7 +49,7 @@
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_subject" value="Nouveau message depuis le portfolio">
                 <input type="hidden" name="_template" value="table">
-                <input type="hidden" name="_next" value="https://luffyy321.github.io/contact.html">
+                <input type="hidden" name="_next" value="https://luffyy321.github.io/contact.html#envoye">
 
                 <div class="contact-field mb-4">
                     <label class="contact-label" for="name">Votre nom</label>
@@ -96,10 +96,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script src="./theme-toggle.js"></script>
     <script>
-        const params = new URLSearchParams(window.location.search);
         const successMessage = document.getElementById('contact-success-message');
+        const params = new URLSearchParams(window.location.search);
+        const hash = window.location.hash;
 
-        if (params.get('message') === 'envoye') {
+        if (params.get('message') === 'envoye' || hash === '#envoye') {
             successMessage.hidden = false;
             window.history.replaceState({}, document.title, window.location.pathname);
         }
