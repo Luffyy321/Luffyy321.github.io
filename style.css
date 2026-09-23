@@ -1,44 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Bebas+Neue&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+
 :root {
-  --brand: #1d4ed8;
-  --muted: #6b6b6b;
-  --card-radius: 12px;
-  --accent: #7c3aed;
-  --bg-dark: #0a0a1f;
-  --bg-gradient: linear-gradient(135deg, #0a0a1f 0%, #1a1a3a 100%);
+  /* Palette papier / encre / rouge manga : fond clair, encre noire, accent rouge vif. */
+  --brand: #111111;
+  --muted: #6b5c5c;
+  --card-radius: 18px;
+  --accent: #d72626;
+  --accent-rgb: 215, 38, 38;
+  --bg-dark: #f7f1e7;
+  --bg-gradient: linear-gradient(180deg, #fbf7f1 0%, #f3efe8 100%);
+  --paper: #fffdf9;
+  --ink: #111111;
+  --ink-rgb: 17, 17, 17;
+  --ink-soft: #2f2a2a;
+  --panel: rgba(255, 255, 255, 0.78);
+  /* Couleur des points de trame qui s'inverse entre thème clair et sombre. */
+  --dot: rgba(17, 17, 17, 0.12);
+  /* Couleur des lignes de vitesse de l'intro qui s'inverse entre thème clair et sombre. */
+  --speedline: rgba(17, 17, 17, 0.07);
 }
 
-@font-face {
-  font-family: "Fira Code";
-  src: url(./font/Fira_Code/static/FiraCode-Regular.ttf);
+body.theme-dark {
+  --brand: #f5f5f5;
+  --muted: #d8d0d0;
+  --accent: #9b6bff;
+  --accent-rgb: 155, 107, 255;
+  --bg-dark: #0d1117;
+  --bg-gradient: linear-gradient(180deg, #11151b 0%, #191d24 100%);
+  --paper: #12161d;
+  --ink: #f4f4f4;
+  --ink-rgb: 244, 244, 244;
+  --ink-soft: #dfe3ea;
+  --panel: rgba(17, 22, 29, 0.8);
+  /* Couleur des points de trame pour le thème sombre, plus lumineuse pour contraster sur fond noir. */
+  --dot: rgba(244, 244, 244, 0.14);
+  /* Couleur des lignes de vitesse de l'intro pour le thème sombre. */
+  --speedline: rgba(244, 244, 244, 0.08);
 }
 
-@font-face {
-  font-family: "Rubik";
-  src: url(./font/Rubik/static/Rubik-Regular.ttf);
-}
-
-/* layout: keep footer at bottom */
+/*
+  Typographie :
+  - Bangers pour les titres, les separators et le mot-symbole d'ouverture, pour garder l'impact visuel d'une couverture de manga.
+  - Source Sans 3 pour le texte courant afin de conserver une lecture confortable sur mobile et desktop.
+*/
 html,
 body {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  font-family: 'Rubik', sans-serif;
-  color: #fff;
+  font-family: 'Source Sans 3', sans-serif;
+  color: var(--ink);
   background: var(--bg-gradient) fixed;
   scroll-behavior: smooth;
 }
 
-/* Background effect */
+body {
+  position: relative;
+  background: var(--bg-gradient) fixed;
+  color: var(--ink);
+}
+
+body.theme-dark .top-bar {
+  background: rgba(18, 22, 29, 0.85);
+  border-bottom-color: var(--ink);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+}
+
+body.theme-dark .theme-toggle {
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 3px 3px 0 rgba(255, 255, 255, 0.12);
+}
+
+body.theme-dark .theme-toggle__icon {
+  background: rgba(155, 107, 255, 0.18);
+}
+
+body.theme-dark .theme-toggle:hover,
+body.theme-dark .theme-toggle:focus-visible {
+  box-shadow: 6px 6px 0 rgba(244, 244, 244, 0.18);
+  background: #1c2029;
+}
+
+body.theme-dark .hero-manga {
+  background: var(--paper);
+}
+
+body.theme-dark .card {
+  background: linear-gradient(180deg, #171d26 0%, #0f1319 100%);
+  border-color: var(--ink);
+  box-shadow: 0 0 0 2px rgba(244, 244, 244, 0.3), 10px 10px 0 rgba(155, 107, 255, 0.35);
+}
+
+body.theme-dark .card-body {
+  background: rgba(17, 22, 29, 0.94);
+  border-top-color: var(--ink);
+}
+
+body.theme-dark footer {
+  background: rgba(17, 22, 29, 0.82);
+  color: var(--ink-soft);
+  border-top-color: var(--ink);
+}
+
+body.theme-dark .footer-links a {
+  color: var(--ink);
+}
+
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 2100;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 3px solid var(--ink);
+  box-shadow: 0 8px 18px rgba(17, 17, 17, 0.08);
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-100%);
+  transition: opacity 300ms ease, transform 300ms ease, visibility 300ms ease;
+}
+
+body.loaded .top-bar {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.top-bar__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 58px;
+  padding-left: 0.35rem;
+  padding-right: 0.35rem;
+}
+
+.top-bar__brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.top-bar__logo {
+  height: 70px;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(215, 38, 38, 0.18));
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 34px;
+  padding: 0;
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 3px 3px 0 rgba(17, 17, 17, 0.9);
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  margin-right: 0.15rem;
+  overflow: hidden;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 6px 6px 0 rgba(17, 17, 17, 0.9);
+  background: #fff6f6;
+  outline: none;
+}
+
+.theme-toggle__track {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.theme-toggle__icon {
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(155, 107, 255, 0.18);
+  color: var(--ink);
+  font-size: 0.8rem;
+  box-shadow: inset 0 0 0 2px rgba(155, 107, 255, 0.2);
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), background 280ms ease, box-shadow 280ms ease;
+}
+
+.theme-toggle__icon i {
+  display: inline-block;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+body.theme-dark .theme-toggle__icon {
+  transform: translate(28px, -50%);
+  background: rgba(226, 53, 53, 0.733);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2), 0 0 12px rgba(255, 137, 107, 0.4);
+}
+
+/* Texture légère en trame de points, inspirée des pages de mange / halftone, sans écraser le texte. */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   width: 100%;
-  height: 100vh;
-  background: radial-gradient(circle at 20% 35%, rgba(124, 58, 237, 0.15) 0%, transparent 25%), radial-gradient(circle at 75% 44%, rgba(124, 58, 237, 0.15) 0%, transparent 20%), radial-gradient(circle at 5% 85%, rgba(124, 58, 237, 0.15) 0%, transparent 30%);
-  animation: backgroundShift 15s ease-in-out infinite alternate;
+  height: 100%;
+  background-image: radial-gradient(circle, var(--dot) 0.8px, transparent 0.9px);
+  background-size: 12px 12px;
+  opacity: 0.35;
   pointer-events: none;
   z-index: 0;
 }
@@ -48,9 +235,8 @@ body::after {
   position: fixed;
   inset: 0;
   width: 100%;
-  height: 100vh;
-  background-image: url("./img/cross_background.svg");
-  opacity: 0.9;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.03), rgba(255, 255, 255, 0.12));
   pointer-events: none;
   z-index: 0;
 }
@@ -63,101 +249,23 @@ main {
   flex-direction: column;
 }
 
-/* terminal (bottom-left, no backdrop) */
-.hero-terminal {
-  position: fixed;
-  bottom: 16px;
-  left: 16px;
-  z-index: 1050;
-  pointer-events: auto;
-  background: transparent;
-  transition: opacity 420ms ease, transform 420ms ease;
-}
-
-/* terminal styling */
-.terminal {
-  position: relative;
-  z-index: 2;
-  background: rgba(10, 10, 31, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 1rem 1.2rem;
-  border: 2px solid var(--accent);
-  border-radius: 12px;
-  max-width: 470px;
-  width: min(92vw, 470px);
-  font-family: 'Fira Code', monospace;
-  /* changed from Courier New */
-  font-size: 1rem;
-  line-height: 1.4rem;
-  color: #9cf;
-  white-space: pre-wrap;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-}
-
-/* Cards: increased height, image cover, hover effect and link behavior */
-.card {
-  position: relative;
-  z-index: 2;
-  min-height: 400px;
-  display: flex;
-  flex-direction: column;
-  transition: transform 220ms ease, box-shadow 220ms ease;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 2px solid var(--accent);
-  background: rgba(10, 10, 31, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  font-family: 'Rubik', sans-serif;
-}
-
-.card-img-top {
-  height: 80%;
-  object-fit: cover;
-  width: 100%;
-  display: block;
-  filter: brightness(0.8) saturate(1.5);
-}
-
-.card-body {
-  padding: 1rem;
-  margin-top: auto;
-  /* keep title at bottom */
-  background: #0a0a1f;
-}
-
-/* wrap entire card in a link */
-.card-link {
-  display: block;
-  color: inherit;
-  text-decoration: none;
-  border-radius: 12px;
-}
-
-.card-link:focus {
-  outline: 2px dashed var(--brand);
-  outline-offset: 4px;
-}
-
-/* hover (and focus) effect */
-.card-link:hover .card,
-.card-link:focus .card {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 6px 18px rgba(0, 0, 0, 0.4);
-}
-
-.card h3 {
-  color: #fff;
-}
-
-/* Sections / layout for cards area */
 section.py-5 {
   padding: 4rem 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   flex: 1 0 auto;
+  opacity: 0;
+  transform: translateY(18px);
+  pointer-events: none;
+  transition: opacity 420ms ease, transform 420ms ease;
+}
+
+body.loaded section.py-5,
+body.loaded footer {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .cards-container {
@@ -171,285 +279,743 @@ section.py-5 {
 
 .cards-grid {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1200px;
 }
 
-/* initial hidden UI until terminal loads */
-section.py-5,
-footer {
-  opacity: 0;
-  transform: translateY(8px);
-  pointer-events: none;
-  transition: opacity 420ms ease, transform 420ms ease;
-}
-
-body.loaded section.py-5,
-body.loaded footer {
+/* Intro manga : écran plein cadre, fond blanc cassé, texture halftone et lignes de vitesse pour reproduire l'effet de page de garde. */
+.hero-manga {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 2000;
+  background: var(--paper);
+  overflow: hidden;
   opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
+  transition: opacity 720ms ease, transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-body.loaded .hero-terminal {
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.995);
-}
-
-/* Flèche de retour */
-.back-arrow {
+.hero-manga::before {
+  content: '';
   position: absolute;
-  top: 20px;
-  left: 0px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 22px;
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 8px;
-  transition: transform 200ms ease, color 200ms ease, text-shadow 200ms ease;
-  text-decoration: none;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--dot) 0.7px, transparent 0.8px);
+  background-size: 12px 12px;
+  opacity: 0.7;
 }
 
-.back-text {
-  font-family: 'Fira Code', monospace;
-  font-size: 16px;
-  color: #fff;
+.hero-manga::after {
+  content: '';
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 130%;
+  background: repeating-linear-gradient(
+    118deg,
+    transparent 0,
+    transparent 16px,
+    var(--speedline) 16px,
+    var(--speedline) 18px,
+    transparent 18px,
+    transparent 36px
+  );
+  transform: rotate(-5deg) translateX(-4%);
+  opacity: 0.8;
+}
+
+.manga-panel {
   position: relative;
-  text-decoration: none;
-  /* Pas de soulignement */
+  z-index: 1;
+  text-align: center;
+  padding: 2rem 1rem;
 }
 
-/* Le "_" est invisible par défaut */
-.back-text::after {
-  content: "_";
+.manga-kicker {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-family: 'Bangers', 'Impact', sans-serif;
+  letter-spacing: 0.2em;
+  font-size: clamp(0.9rem, 2vw, 1.3rem);
+  color: var(--accent);
+  text-transform: uppercase;
   opacity: 0;
-  transition: opacity 200ms ease;
+  transform: translateY(-20px) rotate(-4deg);
 }
 
-/* Apparition au hover */
-.back-arrow:hover .back-text::after {
+.hero-manga h1 {
+  margin: 0;
+  font-family: 'Bebas Neue', 'Impact', sans-serif;
+  font-size: clamp(4.8rem, 16vw, 14rem);
+  line-height: 0.82;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  text-shadow: 6px 6px 0 var(--accent);
+  transform-origin: center;
+  opacity: 0;
+  transform: translateY(40px) scale(0.82) rotate(-2deg);
+}
+
+main h1 {
+  margin: 0 0 1rem;
+  font-family: 'Bebas Neue', 'Impact', sans-serif;
+  font-size: clamp(3.4rem, 8vw, 5.2rem);
+  line-height: 0.6;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  text-shadow: 4px 4px 0 var(--accent);
   opacity: 1;
-  color: var(--accent);
+  transform: none;
 }
 
-.back-arrow:hover .back-text {
-  color: var(--accent);
+.manga-bar {
+  width: min(70vw, 450px);
+  height: 6px;
+  margin: 1.2rem auto 0;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--ink) 45%, var(--accent) 100%);
+  border-radius: 999px;
+  box-shadow: 0 0 20px rgba(215, 38, 38, 0.3);
+  opacity: 0;
+  transform: translateX(-30px) scaleX(0.6);
 }
 
-/* Hover mouvement light */
-.back-arrow:hover {
-  transform: scale(1.05);
-  text-shadow: 0 0 14px rgba(124, 58, 237, 0.7);
-  color: var(--accent);
-  cursor: pointer;
+.manga-panel.is-ready .manga-kicker {
+  animation: introKicker 700ms ease-out 180ms forwards;
 }
 
-/* A propos */
-.about-image {
-  width: 80%;
-  border: 2px solid var(--accent);
-  border-radius: 12px;
-  background: rgba(10, 10, 31, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+.manga-panel.is-ready h1 {
+  animation: introTitle 950ms ease-out 260ms forwards;
 }
 
-.terminal-separator {
+.manga-panel.is-ready .manga-bar {
+  animation: introBar 700ms ease-out 500ms forwards;
+}
+
+@keyframes introKicker {
+  0% {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes introTitle {
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes introBar {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.5);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+body.loaded .hero-manga {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8%) scale(1.02);
+}
+
+body.loaded .top-bar {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Cartes : bordures irrégulières, aspect "encre" et flash blanc au survol. */
+.card {
+  position: relative;
+  z-index: 2;
+  min-height: 400px;
   display: flex;
+  flex-direction: column;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 4px solid var(--ink);
+  background: linear-gradient(180deg, #fffefb 0%, #f7f1ea 100%);
+  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.85), 10px 10px 0 rgba(17, 17, 17, 0.9);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.9;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+.card-img-top {
+  position: relative;
+  z-index: 1;
+  height: 80%;
+  object-fit: contain;
+  width: 82%;
+  display: block;
+  margin: 0 auto;
+  padding: 1rem 0 0;
+  background: transparent;
+  filter: none;
+}
+
+.card-body {
+  position: relative;
+  z-index: 1;
+  padding: 1rem 1rem 1.1rem;
+  margin-top: auto;
+  background: rgba(255, 255, 255, 0.93);
+  border-top: 3px solid var(--ink);
+}
+
+.card-body::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--ink));
+  transition: width 220ms ease;
+}
+
+.card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--card-radius);
+}
+
+.card-link:focus {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.card-link:hover .card,
+.card-link:focus .card {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 22px rgba(17, 17, 17, 0.18), 0 0 0 2px rgba(var(--accent-rgb), 0.8);
+  border-color: var(--accent);
+}
+
+.card-link:hover .card::before,
+.card-link:focus .card::before {
+  opacity: 0.55;
+  animation: speedFlash 240ms ease-in-out;
+}
+
+.card-link:hover .card-body::before,
+.card-link:focus .card-body::before {
+  width: 100%;
+}
+@keyframes speedFlash {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0.1;
+  }
+
+  35% {
+    transform: translateX(0);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translateX(100%);
+    opacity: 0.1;
+  }
+}
+
+.card h3 {
+  position: relative;
+  z-index: 1;
+  color: var(--ink);
+  font-family: 'Bangers', 'Impact', sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+}
+
+/* Retour en arrière et blocs de contenu projet : bordures épaisses et ombre typographique BD. */
+.back-arrow {
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  color: var(--accent);
-  font-family: 'Fira Code', monospace;
-  margin: 2rem 0;
-  opacity: 0.85;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin: 1rem 0 1.5rem;
+  padding: 0;
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  text-decoration: none;
+  box-shadow: 4px 4px 0 rgba(17, 17, 17, 0.9);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
 }
 
-.terminal-separator::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: rgba(124, 58, 237, 0.4);
+.back-arrow:hover,
+.back-arrow:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(17, 17, 17, 0.9);
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.9);
+  outline: none;
 }
 
-/* Compétences */
+.back-arrow__icon {
+  display: block;
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.projet_box {
+  position: relative;
+  z-index: 2;
+  background: var(--paper);
+  border: 4px solid var(--ink);
+  border-radius: 22px;
+  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.85), 10px 10px 0 rgba(17, 17, 17, 0.9);
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+body.theme-dark .projet_box {
+  background: rgba(18, 22, 29, 0.92);
+  border-color: var(--ink);
+  box-shadow: 0 0 0 2px rgba(244, 244, 244, 0.3), 10px 10px 0 rgba(155, 107, 255, 0.35);
+}
+
+/*  Fiche personnage : portrait et illustrations encadrées comme des planches de manga. */
+.portrait-frame {
+  position: relative;
+  display: block;
+  padding: 0.75rem;
+  background: var(--paper);
+  border: 4px solid var(--ink);
+  border-radius: 22px;
+  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.85), 10px 10px 0 rgba(17, 17, 17, 0.9);
+  overflow: hidden;
+}
+
+.portrait-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+  background: rgba(17, 17, 17, 0.04);
+}
+
+body.theme-dark .portrait-frame {
+  background: rgba(18, 22, 29, 0.92);
+  box-shadow: 0 0 0 2px rgba(244, 244, 244, 0.3), 10px 10px 0 rgba(155, 107, 255, 0.35);
+}
+
+.about-manga .projet_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.skills-illustration {
+  width: min(220px, 100%);
+  aspect-ratio: 1.1;
+  margin-left: auto;
+}
+
 .skills-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.7rem;
+}
+
+/*  Étiquettes de personnage / tags de compétences, cohérentes avec le thème manga. */
+.skill-title {
+  margin: 0 0 1rem;
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  color: var(--ink);
+  text-transform: none;
 }
 
 .skill-badge {
-  padding: 0.6rem 1.2rem;
-  border: 2px solid var(--accent);
-  border-radius: 12px;
-  background: rgba(10, 10, 31, 0.8);
-  backdrop-filter: blur(10px);
-  color: #fff;
-  font-family: 'Fira Code', monospace;
-  transition: transform 200ms ease, background 200ms ease, box-shadow 200ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.85rem;
+  border: 3px solid var(--ink);
+  border-radius: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 4px 4px 0 rgba(17, 17, 17, 0.8);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
 }
 
 .skill-badge:hover {
-  transform: scale(1.08);
-  background: var(--accent);
-  box-shadow: 0 0 18px rgba(124, 58, 237, 0.5);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(17, 17, 17, 0.8);
+  border-color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.06);
 }
 
-.skill-title {
-  font-family: 'Fira Code', monospace;
-  color: var(--accent);
-  margin-top: 2.5rem;
-  opacity: 0.85;
-  font-size: 1.2rem;
+body.theme-dark .skill-badge {
+  background: rgba(18, 22, 29, 0.92);
+  color: var(--ink);
+  box-shadow: 4px 4px 0 rgba(244, 244, 244, 0.12);
 }
 
+body.theme-dark .skill-badge:hover {
+  box-shadow: 6px 6px 0 rgba(244, 244, 244, 0.18);
+  background: rgba(var(--accent-rgb), 0.12);
+}
 
-/* Contact */
+/*  Les cartes de compétences peuvent se placer côte à côte sans casser le comportement de .projet_box. */
+.skills-manga .projet_box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+@media (max-width: 767.98px) {
+  .skills-illustration {
+    margin-left: 0;
+    width: min(260px, 100%);
+  }
+}
+
+.btn-contact {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.1rem;
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 4px 4px 0 rgba(17, 17, 17, 0.9);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.btn-contact:hover,
+.btn-contact:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(17, 17, 17, 0.9);
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--ink);
+  outline: none;
+}
+
+body.theme-dark .btn-contact {
+  background: rgba(18, 22, 29, 0.96);
+  box-shadow: 4px 4px 0 rgba(244, 244, 244, 0.12);
+}
+
+body.theme-dark .btn-contact:hover,
+body.theme-dark .btn-contact:focus-visible {
+  box-shadow: 6px 6px 0 rgba(244, 244, 244, 0.18);
+  background: #1c2029;
+}
+
+/* Contact manga : panneau de formulaire aligné sur le thème des pages projet. */
+.contact-panel {
+  width: min(100%, 860px);
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.contact-success-message {
+  width: min(100%, 860px);
+  margin: 0 auto 1.25rem;
+  padding: 0.85rem 1rem;
+  border: 3px solid #1a7f37;
+  border-radius: 14px;
+  background: rgba(26, 127, 55, 0.12);
+  color: var(--ink);
+  font-weight: 700;
+  box-shadow: 4px 4px 0 rgba(17, 17, 17, 0.9);
+}
+
+body.theme-dark .contact-success-message {
+  border-color: #7ee0a3;
+  background: rgba(126, 224, 163, 0.12);
+  box-shadow: 4px 4px 0 rgba(244, 244, 244, 0.12);
+}
+
+.contact-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  background: var(--paper);
+  border: 4px solid var(--ink);
+  border-radius: 22px;
+  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.85), 10px 10px 0 rgba(17, 17, 17, 0.9);
+  overflow: hidden;
+}
+
+body.theme-dark .contact-wrapper {
+  background: rgba(18, 22, 29, 0.92);
+  box-shadow: 0 0 0 2px rgba(244, 244, 244, 0.3), 10px 10px 0 rgba(155, 107, 255, 0.35);
+}
+
+.contact-form {
+  position: relative;
+  z-index: 1;
+}
 
 .contact-terminal {
-  font-family: 'Fira Code', monospace;
-  color: var(--accent);
-  font-size: 1.1rem;
-  opacity: 0.9;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  background: rgba(var(--accent-rgb), 0.14);
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  color: var(--ink);
+  font-family: 'Bangers', 'Impact', sans-serif;
+  letter-spacing: 0.08em;
+  box-shadow: 4px 4px 0 rgba(17, 17, 17, 0.8);
+}
+
+body.theme-dark .contact-terminal {
+  background: rgba(var(--accent-rgb), 0.22);
+  box-shadow: 4px 4px 0 rgba(244, 244, 244, 0.1);
 }
 
 .contact-terminal .prompt {
-  color: #fff;
-  margin-right: 6px;
+  color: var(--accent);
 }
 
-/* Form wrapper */
-.contact-wrapper {
-  max-width: 800px;
-  width: 90%;
-  margin: 0 auto;
-  padding: 2rem;
-  border-radius: 14px;
-  background: rgba(10, 10, 31, 0.6);
-  border: 2px solid rgba(124, 58, 237, 0.3);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.45);
+.contact-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-/* Inputs */
+.contact-label {
+  color: var(--ink);
+  font-family: 'Bangers', 'Impact', sans-serif;
+  letter-spacing: 0.08em;
+  font-size: 1.1rem;
+}
+
 .contact-input {
-  background: rgba(10, 10, 31, 0.85);
-  border: 2px solid rgba(124, 58, 237, 0.4);
-  color: white !important;
-  border-radius: 10px;
-  font-family: 'Fira Code', monospace;
-  padding: 0.7rem 1rem;
-  transition: border 200ms ease, box-shadow 200ms ease, transform 180ms ease;
+  width: 100%;
+  padding: 0.8rem 0.95rem;
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Source Sans 3', sans-serif;
+  box-shadow: inset 0 0 0 2px rgba(17, 17, 17, 0.1);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease, background 180ms ease;
+  -webkit-text-fill-color: var(--ink);
 }
 
 .contact-input::placeholder {
-  color: rgba(255, 255, 255, 0.6) !important;
+  color: rgba(var(--ink-rgb), 0.56);
 }
 
 .contact-input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 12px rgba(124, 58, 237, 0.45);
-  transform: scale(1.015);
-  background: rgba(10, 10, 31, 0.95);
+  background: rgba(var(--accent-rgb), 0.03);
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.18), 4px 4px 0 rgba(17, 17, 17, 0.12);
+  outline: none;
 }
 
-.btn-contact {
-  font-family: 'Fira Code', monospace;
-  color: white;
-  border: 2px solid var(--accent);
-  border-radius: 10px;
-  background: rgba(10, 10, 31, 0.8);
-  transition: transform 180ms ease, box-shadow 200ms ease, background 180ms ease;
+body.theme-dark .contact-input {
+  background: rgba(18, 22, 29, 0.92);
+  color: var(--ink);
+  -webkit-text-fill-color: var(--ink);
+  box-shadow: inset 0 0 0 2px rgba(244, 244, 244, 0.12);
 }
 
-.btn-contact:hover {
-  transform: scale(1.02);
-  background: var(--accent);
-  box-shadow: 0 0 18px rgba(124, 58, 237, 0.5);
+body.theme-dark .contact-input:focus {
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.28), 4px 4px 0 rgba(244, 244, 244, 0.08);
 }
 
-/* Projets Infos */
-.projet_img {
-  border: 2px solid var(--accent);
-  backdrop-filter: blur(12px);
-  background: rgba(10, 10, 31, 0.9);
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
-  border-radius: 12px;
-  max-width: 600px;
-  height: auto;
+.contact-input,
+.contact-input:focus,
+.contact-input:active,
+.contact-input:hover {
+  color: var(--ink);
+  -webkit-text-fill-color: var(--ink);
 }
 
-.projet_box {
-  background: rgba(10, 10, 31, 0.85);
-  border: 2px solid var(--accent);
-  backdrop-filter: blur(12px);
-  border-radius: 12px;
-
+.contact-form .btn-contact {
+  width: 100%;
+  border-radius: 14px;
+  font-family: 'Bangers', 'Impact', sans-serif;
+  letter-spacing: 0.06em;
+  font-size: 1.2rem;
 }
 
-.projet_title {
-  color: var(--accent);
-  font-family: 'Fira Code', monospace;
+.terminal-separator {
+  display: inline-block;
+  padding: 0.45rem 1.1rem;
+  margin: 1.5rem 0 1rem;
+  background: rgba(var(--accent-rgb), 0.14);
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  color: var(--ink);
+  font-family: 'Bangers', 'Impact', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  box-shadow: 4px 4px 0 rgba(17, 17, 17, 0.8);
 }
 
+body.theme-dark .terminal-separator {
+  background: rgba(var(--accent-rgb), 0.22);
+  box-shadow: 4px 4px 0 rgba(244, 244, 244, 0.1);
+}
 
-/* Footer styles */
+.ratio.projet_box {
+  border: 4px solid var(--ink);
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--paper);
+  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.85), 10px 10px 0 rgba(17, 17, 17, 0.9);
+}
+
+body.theme-dark .ratio.projet_box {
+  background: rgba(18, 22, 29, 0.92);
+  box-shadow: 0 0 0 2px rgba(244, 244, 244, 0.3), 10px 10px 0 rgba(155, 107, 255, 0.35);
+}
+
+/* Titres de séparation et éléments de détail style manga. */
+.terminal-separator,
+.skill-title,
+.projet_title,
+.footer-colophon {
+  font-family: 'Bangers', 'Impact', sans-serif;
+  letter-spacing: 0.08em;
+}
+
+/* Footer : conserve le copyright et ajoute un colophon de fin de chapitre au style manga. */
 footer {
-  color: rgba(255, 255, 255, 0.532);
   position: relative;
   z-index: 2;
-  background: rgba(10, 10, 31, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.72);
+  border-top: 3px solid var(--ink);
 }
 
 footer .container {
-  font-family: 'Fira Code', monospace;
+  font-family: 'Source Sans 3', sans-serif;
   flex-wrap: wrap;
 }
 
 .footer-links {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.75rem;
   flex-wrap: wrap;
 }
 
 .footer-links a {
+  color: var(--ink);
   text-decoration: none;
-  transition: color 200ms;
+  transition: color 180ms ease;
 }
 
 .footer-links a:hover {
   color: var(--accent) !important;
 }
 
-/* responsive tweaks */
+.footer-colophon-wrap {
+  padding-top: 0;
+}
+
+.footer-colophon {
+  display: inline-block;
+  color: var(--accent);
+  font-size: 1.2rem;
+  letter-spacing: 0.2em;
+  text-transform: lowercase;
+  border-top: 2px solid rgba(var(--ink-rgb), 0.32);
+  padding-top: 0.5rem;
+}
+
+.legal-page {
+  max-width: 980px;
+}
+
+.legal-page h1 {
+  margin-bottom: 0.5rem;
+}
+
+.legal-intro {
+  color: var(--muted);
+  font-size: 1.05rem;
+  margin-bottom: 2rem;
+}
+
+.legal-page .projet_box {
+  padding: 2rem 1.5rem;
+}
+
+.legal-page .projet_box h4 {
+  margin-bottom: 0.8rem;
+}
+
+.legal-page .projet_box ul {
+  margin: 1rem 0 1rem 1.25rem;
+  padding-left: 1rem;
+}
+
+.legal-page .projet_box li + li {
+  margin-top: 0.45rem;
+}
+
+.legal-page .projet_box a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.legal-page .projet_box a:hover,
+.legal-page .projet_box a:focus-visible {
+  text-decoration: underline;
+}
+
+.legal-page strong {
+  color: var(--ink);
+}
+
+/* Responsive mobile-first : les éléments restent lisibles et l'intro couvre bien l'écran. */
 @media (max-width: 576px) {
-  body {
-    background: linear-gradient(135deg, #0a0a1f 0%, #151530 100%);
+  .hero-manga h1 {
+    text-shadow: 4px 4px 0 var(--accent);
   }
 
-  body::before {
-    opacity: 0.9;
-  }
-
-  body::after {
-    opacity: 0.8;
-  }
-
-  .terminal {
-    font-size: 0.95rem;
-    padding: 0.9rem;
-    line-height: 1.3rem;
-  }
-
-  .cards-grid .col-sm-6 {
-    flex: 0 0 100%;
-    max-width: 100%;
+  main h1 {
+    font-size: clamp(3.8rem, 13vw, 5rem);
+    line-height: 0.72;
+    text-shadow: 3px 3px 0 var(--accent);
   }
 
   .card {
@@ -460,39 +1026,14 @@ footer .container {
     height: 80%;
   }
 
-  /* Responsive footer adjustments */
   footer .container {
     flex-direction: column;
     text-align: center;
-    gap: 1.2rem;
+    gap: 1rem;
   }
 
   .footer-links {
     width: 100%;
     justify-content: center;
-  }
-}
-
-/* Adjust terminal background for better contrast */
-.terminal {
-  background: rgba(10, 10, 31, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-/* Adjust card background for better contrast */
-.card {
-  background: rgba(10, 10, 31, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-@keyframes backgroundShift {
-  0% {
-    transform: scale(1) translate(0, 0);
-  }
-
-  100% {
-    transform: scale(3) translate(-2%, -2%);
   }
 }

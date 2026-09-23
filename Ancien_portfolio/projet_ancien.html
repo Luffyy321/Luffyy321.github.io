@@ -6,48 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mes Projets — Clément Vigier</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="./style.css" rel="stylesheet">
 
     <meta name="description" content="Projets réalisés par Clément Vigier">
 
-    <link rel="icon" href="./img/logo.png">
+    <link rel="icon" href="./img/logofinal.png">
 
 </head>
 
 <body class="loaded">
-    <header class="top-bar">
-        <div class="top-bar__inner container">
-            <a href="./index.html" class="top-bar__brand" aria-label="Retour à l'accueil">
-                <img src="./img/logo.png" alt="Logo Clément Vigier" class="top-bar__logo top-bar__logo--theme">
-            </a>
 
-            <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-label="Passer en mode sombre">
-                <span class="theme-toggle__track">
-                    <span class="theme-toggle__icon" aria-hidden="true">
-                        <i class="bi bi-moon-fill"></i>
-                    </span>
-                </span>
-            </button>
-        </div>
-    </header>
 
     <main class="container py-5">
-        <!-- bouton retour -->
-        <a href="./index.html" class="back-arrow" aria-label="Retour à la liste des projets">
-            <img id="back-arrow-icon" src="./img/back_arrow_black.png" alt="Retour" class="back-arrow__icon">
+        <a href="index.html" class="back-arrow">
+            <i class="fas fa-arrow-left"></i>
+            <span class="back-text">Retour</span>
         </a>
         <section class="py-3">
-            <h1 class="m-4">Jeux vidéos</h1>
+            <h1 class="m-4">Mes Projets</h1>
             <div class="container cards-container">
                 
 
-                <div class="cards-grid row g-4 ">
+                <div class="cards-grid row g-4 justify-content-center">
                     <!-- Projet 1 -->
                     <div class="col-md-6 col-lg-4 d-flex mb-4">
                         <a href="./projet_detail.html?id=1" class="card-link w-100">
                             <div class="card h-100">
-                                <img src="../img/Jeu_scratch.png" class="card-img-top" alt="Projet Web">
+                                <img src="./img/Jeu_scratch.png" class="card-img-top" alt="Projet Web">
                                 <div class="card-body">
                                     <h3 class="h5 mt-3 mb-0 text-center">SAE - Jeu Scratch</h3>
                                 </div>
@@ -55,33 +40,11 @@
                         </a>
                     </div>
 
-                    <!-- Projet 6 -->
-                    <div class="col-md-6 col-lg-4 d-flex mb-4">
-                        <a href="./projet_detail.html?id=6" class="card-link w-100">
-                            <div class="card h-100">
-                                <img src="../img/img_unity2.png" class="card-img-top" alt="Développement Web">
-                                <div class="card-body">
-                                    <h3 class="h5 mt-3 mb-0 text-center">Projet Unity</h3>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-        <section class="py-3">
-            <h1 class="m-4">Sites Web</h1>
-            <div class="container cards-container">
-                
-
-                <div class="cards-grid row g-4">
-
                     <!-- Projet 2 -->
                     <div class="col-md-6 col-lg-4 d-flex mb-4">
                         <a href="./projet_detail.html?id=2" class="card-link w-100">
                             <div class="card h-100">
-                                <img src="../img/img_SAE.webp" class="card-img-top" alt="Jeu Unity">
+                                <img src="./img/img_SAE.webp" class="card-img-top" alt="Jeu Unity">
                                 <div class="card-body">
                                     <h3 class="h5 mt-3 mb-0 text-center">SAE - site web</h3>
                                 </div>
@@ -93,7 +56,7 @@
                     <div class="col-md-6 col-lg-4 d-flex mb-4">
                         <a href="./projet_detail.html?id=3" class="card-link w-100">
                             <div class="card h-100">
-                                <img src="../img/cinecup.png" class="card-img-top" alt="Montage vidéo">
+                                <img src="./img/cinecup.png" class="card-img-top" alt="Montage vidéo">
                                 <div class="card-body">
                                     <h3 class="h5 mt-3 mb-0 text-center">SAE - Cinécup</h3>
                                 </div>
@@ -101,21 +64,11 @@
                         </a>
                     </div>
 
-                </div>
-            </div>
-        </section>
-        <section class="py-3">
-            <h1 class="m-4">Films</h1>
-            <div class="container cards-container">
-                
-
-                <div class="cards-grid row g-5">
-
                     <!-- Projet 4 -->
                     <div class="col-md-6 col-lg-4 d-flex mb-4">
                         <a href="./projet_detail.html?id=4" class="card-link w-100">
                             <div class="card h-100">
-                                <img src="../img/disconected.png" class="card-img-top" alt="Projet scolaire">
+                                <img src="./img/disconected.png" class="card-img-top" alt="Projet scolaire">
                                 <div class="card-body">
                                     <h3 class="h5 mt-3 mb-0 text-center">SAE - Poket Film</h3>
                                 </div>
@@ -127,9 +80,21 @@
                     <div class="col-md-6 col-lg-4 d-flex mb-4">
                         <a href="./projet_detail.html?id=5" class="card-link w-100">
                             <div class="card h-100">
-                                <img src="../img/interférence.png" class="card-img-top" alt="Projet créatif">
+                                <img src="./img/interférence.png" class="card-img-top" alt="Projet créatif">
                                 <div class="card-body">
                                     <h3 class="h5 mt-3 mb-0 text-center">SAE - Court Métrage</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Projet 6 -->
+                    <div class="col-md-6 col-lg-4 d-flex mb-4">
+                        <a href="./projet_detail.html?id=6" class="card-link w-100">
+                            <div class="card h-100">
+                                <img src="./img/img_unity2.png" class="card-img-top" alt="Développement Web">
+                                <div class="card-body">
+                                    <h3 class="h5 mt-3 mb-0 text-center">Projet Unity</h3>
                                 </div>
                             </div>
                         </a>
@@ -144,15 +109,14 @@
         <div class="container d-flex justify-content-between align-items-center p-3">
             <small class="">© 2026 Clément Vigier — Portfolio</small>
             <div class="footer-links">
-                <a href="../mentions_legales.html" class="h6 me-3">Mentions légales</a>
-                <a href="../pdc.html" class="h6">Politique de confidentialité</a>
+                <a href="./mentions_legales.html" class="h6 me-3">Mentions légales</a>
+                <a href="./pdc.html" class="h6">Politique de confidentialité</a>
             </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
-    <script src="./theme-toggle.js"></script>
 </body>
 
 </html>

@@ -3,7 +3,7 @@ const PROJECTS = {
         name: "SAE — Jeu Scratch",
         media: {
             type: "image",
-            src: "../img/Jeu_scratch.png"
+            src: "./img/scratch.png"
         },
         description: `Dans le cadre de cette SAE, nous devions concevoir un jeu de labyrinthe en utilisant la
                         plateforme Scratch. L’objectif était de créer une expérience de jeu simple mais fonctionnelle,
@@ -24,7 +24,7 @@ const PROJECTS = {
         name: "SAE — Site web",
         media: {
             type: "image",
-            src: "../img/img_SAE.webp"
+            src: "./img/img_SAE.webp"
         },
         description: "Cette SAE consistait à créer un site web dédié à un événement sportif. Avec mon groupe, nous avons choisi de travailler sur le béhourd. En parallèle, nous devions réaliser une étude d’opportunité et une étude de faisabilité, toujours en groupe de quatre. L’objectif final était d’héberger notre site sur le serveur de l’IUT.",
         role: "Au sein du groupe, j’ai contribué à la création du site ainsi qu’à la réalisation des études demandées. J’ai participé à la conception des pages, à leur mise en forme et à l’organisation du contenu. J’ai également pris part au travail collectif pour rédiger les analyses et préparer la mise en ligne du projet sur le serveur de l’IUT.",
@@ -37,7 +37,7 @@ const PROJECTS = {
         name: "SAE - Cinécup",
         media: {
             type: "image",
-            src: "../img/cinecup.png"
+            src: "./img/cinecup.png"
         },
         description: "Dans cette SAE, nous devions créer un site web permettant aux utilisateurs de voter pour leur film préféré. Le site proposait différents thèmes de tournois, comme l’action ou l’animation, afin d’organiser les votes par catégories. Le principal défi du projet résidait dans la mise en place d’une base de données et dans son intégration avec le site web pour enregistrer et gérer les votes.",
         role: "Mon rôle a été de contribuer à la conception du site et à l’intégration de la base de données. J’ai participé à la structure des pages, à la mise en place du système de vote et au lien entre l’interface et la base de données. J’ai également aidé aux tests pour vérifier que les votes étaient bien enregistrés et que le site fonctionnait correctement.",
@@ -76,7 +76,7 @@ const PROJECTS = {
         name: "Projet Unity",
         media: {
             type: "image",
-            src: "../img/img_unity1.png"
+            src: "./img/img_unity1.png"
         },
         description: "Dans une démarche d’auto-formation, j’ai réalisé un jeu de type platformer sur le moteur Unity. Ce projet s’appuie à la fois sur une formation en ligne et sur le suivi de tutoriels vidéo, avec pour objectif de découvrir et comprendre les bases du développement de jeux vidéo sous Unity. Le jeu met en place des mécaniques classiques de platformer, comme les déplacements, les sauts, la gestion des collisions et l’interaction avec l’environnement. Ce projet m’a permis de me familiariser avec l’interface du logiciel, la gestion des scènes, des assets et la logique de gameplay.",
         role: "J’ai réalisé ce projet en autonomie, en suivant les différentes étapes de conception et de développement. J’ai notamment travaillé sur l’implémentation des mécaniques de jeu à l’aide de scripts en C#, la gestion du personnage joueur, ainsi que la structure générale du projet. Cette expérience m’a permis de renforcer ma compréhension du moteur Unity et de développer des bases solides pour de futurs projets de jeux vidéo.",
