@@ -1,110 +1,204 @@
 <!doctype html>
 <html lang="fr">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Contact — Clément Vigier</title>
-    <meta name="description" content="Formulaire pour contacter Clément Vigier">
+    <meta
+      name="description"
+      content="Formulaire pour contacter Clément Vigier"
+    />
 
-    <link rel="icon" href="./img/logo.png">
+    <link rel="icon" href="./img/logo.png" />
 
     <!-- Bootstrap 5 CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="./style.css" rel="stylesheet">
-</head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link href="./style.css" rel="stylesheet" />
+  </head>
 
-<body class="loaded">
+  <body class="loaded">
     <header class="top-bar">
-        <div class="top-bar__inner container">
-            <a href="./index.html" class="top-bar__brand" aria-label="Retour à l'accueil">
-                <img src="./img/logo.png" alt="Logo Clément Vigier" class="top-bar__logo top-bar__logo--theme">
-            </a>
+      <div class="top-bar__inner container">
+        <a
+          href="./index.html"
+          class="top-bar__brand"
+          aria-label="Retour à l'accueil"
+        >
+          <img
+            src="./img/logo.png"
+            alt="Logo Clément Vigier"
+            class="top-bar__logo top-bar__logo--theme"
+          />
+        </a>
 
-            <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-label="Passer en mode sombre">
-                <span class="theme-toggle__track">
-                    <span class="theme-toggle__icon" aria-hidden="true">
-                        <i class="bi bi-moon-fill"></i>
-                    </span>
-                </span>
-            </button>
-        </div>
+        <button
+          type="button"
+          class="theme-toggle"
+          id="theme-toggle-btn"
+          aria-label="Passer en mode sombre"
+        >
+          <span class="theme-toggle__track">
+            <span class="theme-toggle__icon" aria-hidden="true">
+              <i class="bi bi-moon-fill"></i>
+            </span>
+          </span>
+        </button>
+      </div>
     </header>
 
     <main class="container py-5">
-        <a href="./index.html" class="back-arrow" aria-label="Retour à l'accueil">
-            <img id="back-arrow-icon" src="./img/back_arrow_black.png" alt="Retour" class="back-arrow__icon">
-        </a>
-        <h1 class="m-4">Contact</h1>
+      <a href="./index.html" class="back-arrow" aria-label="Retour à l'accueil">
+        <img
+          id="back-arrow-icon"
+          src="./img/back_arrow_black.png"
+          alt="Retour"
+          class="back-arrow__icon"
+        />
+      </a>
+      <h1 class="m-4">Contact</h1>
 
-        <div id="contact-success-message" class="contact-success-message" role="status" aria-live="polite" hidden>
-            Message envoyé avec succès. Je vous répondrai très prochainement.
-        </div>
+      <div
+        id="contact-success-message"
+        class="contact-success-message"
+        role="status"
+        aria-live="polite"
+        hidden
+      >
+        Message envoyé avec succès. Je vous répondrai très prochainement.
+      </div>
 
-        <div class="contact-wrapper contact-panel mt-3 mb-3">
+      <div class="contact-wrapper contact-panel mt-3 mb-3">
+        <form class="contact-form p-4" id="contact-form">
+          <input type="hidden" name="_captcha" value="false" />
+          <input
+            type="hidden"
+            name="_subject"
+            value="Nouveau message depuis le portfolio"
+          />
+          <input type="hidden" name="_template" value="table" />
 
-            <form class="contact-form p-4" action="https://formsubmit.co/clementvigier3@gmail.com" method="POST">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_subject" value="Nouveau message depuis le portfolio">
-                <input type="hidden" name="_template" value="table">
-                <input type="hidden" name="_next" value="https://luffyy321.github.io/contact.html#envoye">
+          <div class="contact-field mb-4">
+            <label class="contact-label" for="name">Votre nom</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="form-control contact-input"
+              placeholder="Entrez votre nom"
+              required
+            />
+          </div>
 
-                <div class="contact-field mb-4">
-                    <label class="contact-label" for="name">Votre nom</label>
-                    <input type="text" id="name" name="name" class="form-control contact-input" placeholder="Entrez votre nom"
-                        required>
-                </div>
+          <div class="contact-field mb-4">
+            <label class="contact-label" for="email">Votre email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-control contact-input"
+              placeholder="votre@email.fr"
+              required
+            />
+          </div>
 
-                <div class="contact-field mb-4">
-                    <label class="contact-label" for="email">Votre email</label>
-                    <input type="email" id="email" name="email" class="form-control contact-input" placeholder="votre@email.fr"
-                        required>
-                </div>
+          <div class="contact-field mb-4">
+            <label class="contact-label" for="subject">Objet</label>
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              class="form-control contact-input"
+              placeholder="Sujet du message"
+              required
+            />
+          </div>
 
-                <div class="contact-field mb-4">
-                    <label class="contact-label" for="subject">Objet</label>
-                    <input type="text" id="subject" name="subject" class="form-control contact-input" placeholder="Sujet du message"
-                        required>
-                </div>
+          <div class="contact-field mb-4">
+            <label class="contact-label" for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              class="form-control contact-input"
+              rows="5"
+              placeholder="Écrivez votre message..."
+              required
+            ></textarea>
+          </div>
 
-                <div class="contact-field mb-4">
-                    <label class="contact-label" for="message">Message</label>
-                    <textarea id="message" name="message" class="form-control contact-input" rows="5"
-                        placeholder="Écrivez votre message..." required></textarea>
-                </div>
-
-                <button type="submit" class="btn-contact w-100 py-2">
-                    Envoyer le message
-                </button>
-            </form>
-        </div>
+          <button
+            type="submit"
+            class="btn-contact w-100 py-2"
+            id="contact-submit"
+          >
+            Envoyer le message
+          </button>
+        </form>
+      </div>
     </main>
 
     <footer>
-        <div class="container d-flex justify-content-between align-items-center p-3">
-            <small class="">© 2026 Clément Vigier — Portfolio</small>
-            <div class="footer-links">
-                <a href="./mentions_legales.html" class="h6 me-3">Mentions légales</a>
-                <a href="./pdc.html" class="h6">Politique de confidentialité</a>
-            </div>
+      <div
+        class="container d-flex justify-content-between align-items-center p-3"
+      >
+        <small class="">© 2026 Clément Vigier — Portfolio</small>
+        <div class="footer-links">
+          <a href="./mentions_legales.html" class="h6 me-3">Mentions légales</a>
+          <a href="./pdc.html" class="h6">Politique de confidentialité</a>
         </div>
+      </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script src="./theme-toggle.js"></script>
     <script>
-        const successMessage = document.getElementById('contact-success-message');
-        const params = new URLSearchParams(window.location.search);
-        const hash = window.location.hash;
+      const form = document.getElementById("contact-form");
+      const successMessage = document.getElementById("contact-success-message");
+      const submitBtn = document.getElementById("contact-submit");
 
-        if (params.get('message') === 'envoye' || hash === '#envoye') {
-            successMessage.hidden = false;
-            window.history.replaceState({}, document.title, window.location.pathname);
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Envoi en cours...";
+
+        try {
+          const response = await fetch(
+            "https://formsubmit.co/ajax/clementvigier3@gmail.com",
+            {
+              method: "POST",
+              headers: { Accept: "application/json" },
+              body: new FormData(form),
+            },
+          );
+
+          if (!response.ok) throw new Error("Échec de l'envoi");
+
+          successMessage.hidden = false;
+          successMessage.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+          form.reset();
+        } catch (err) {
+          alert(
+            "Une erreur est survenue. Réessaie ou écris-moi directement par email.",
+          );
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Envoyer le message";
         }
+      });
     </script>
-</body>
-
+  </body>
 </html>

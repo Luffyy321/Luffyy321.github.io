@@ -853,6 +853,13 @@ textarea.contact-input:-webkit-autofill:active {
   box-shadow: 0 0 0 1000px var(--paper) inset !important;
 }
 
+.contact-input:autofill,
+textarea.contact-input:autofill {
+  color: var(--ink) !important;
+  background-color: var(--paper) !important;
+  box-shadow: 0 0 0 1000px var(--paper) inset !important;
+}
+
 .contact-input::placeholder {
   color: rgba(var(--ink-rgb), 0.56);
 }
@@ -878,6 +885,12 @@ body.theme-dark .contact-input:-webkit-autofill:active,
 body.theme-dark textarea.contact-input:-webkit-autofill,
 body.theme-dark textarea.contact-input:-webkit-autofill:hover,
 body.theme-dark textarea.contact-input:-webkit-autofill:focus,
+body.theme-dark .contact-input:autofill,
+body.theme-dark textarea.contact-input:autofill {
+  color: var(--ink) !important;
+  background-color: rgba(18, 22, 29, 0.92) !important;
+  box-shadow: 0 0 0 1000px rgba(18, 22, 29, 0.92) inset !important;
+}
 body.theme-dark textarea.contact-input:-webkit-autofill:active {
   -webkit-text-fill-color: var(--ink) !important;
   color: var(--ink) !important;
