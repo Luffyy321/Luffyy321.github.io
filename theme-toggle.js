@@ -1,6 +1,7 @@
 const themeToggleBtn = document.getElementById('theme-toggle-btn');
 const themeIcon = document.querySelector('.theme-toggle__icon i');
 const backArrowIcon = document.getElementById('back-arrow-icon');
+const favicon = document.querySelector('link[rel="icon"]');
 const themedIcons = document.querySelectorAll('.card-icon');
 const topBarLogos = document.querySelectorAll('.top-bar__logo--theme');
 
@@ -19,12 +20,16 @@ function applyTheme(theme) {
     themeIcon.classList.toggle('bi-sun-fill', isDark);
   }
 
+  if (favicon) {
+    favicon.href = isDark ? './img/logo_blanc.png' : './img/logo_noir.png';
+  }
+
   if (backArrowIcon) {
     backArrowIcon.src = isDark ? './img/back_arrow_white.png' : './img/back_arrow_black.png';
   }
 
   topBarLogos.forEach((logo) => {
-    logo.src = isDark ? './img/logo_white.png' : './img/logo.png';
+    logo.src = isDark ? './img/logo_blanc.png' : './img/logo_noir.png';
   });
 
   themedIcons.forEach((icon) => {
